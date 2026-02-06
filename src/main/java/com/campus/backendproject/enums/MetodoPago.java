@@ -1,6 +1,6 @@
 package com.campus.backendproject.enums;
 
-public enum Metodo_Pago {
+public enum MetodoPago {
     TARJETA,
     TRANSFERENCIA,
     EFECTIVO
