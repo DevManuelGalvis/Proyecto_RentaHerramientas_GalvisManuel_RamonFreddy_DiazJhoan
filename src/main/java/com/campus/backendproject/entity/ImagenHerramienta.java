@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "imagenes_herramientas")
-public class ImagenesHerramientas {
+public class ImagenHerramienta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,11 +15,11 @@ public class ImagenesHerramientas {
 
     @OneToOne
     @JoinColumn(name = "herramienta_id", nullable = false)
-    private Herramientas herramienta;
+    private Herramienta herramienta;
 
-    public ImagenesHerramientas (){}
+    public ImagenHerramienta(){}
 
-    public ImagenesHerramientas(String urlImagen) {
+    public ImagenHerramienta(String urlImagen) {
         this.urlImagen = urlImagen;
     }
 
@@ -35,11 +35,11 @@ public class ImagenesHerramientas {
         this.urlImagen = urlImagen;
     }
 
-    public Herramientas getHerramienta() {
+    public Herramienta getHerramienta() {
         return herramienta;
     }
 
-    public void setHerramienta(Herramientas herramienta) {
+    public void setHerramienta(Herramienta herramienta) {
         this.herramienta = herramienta;
     }
 }

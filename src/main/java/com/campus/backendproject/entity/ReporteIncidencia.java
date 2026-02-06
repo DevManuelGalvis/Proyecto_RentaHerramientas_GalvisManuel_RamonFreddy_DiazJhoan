@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "reporte_incidencias")
-public class ReporteIncidencias {
+public class ReporteIncidencia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,15 +24,15 @@ public class ReporteIncidencias {
 
     @ManyToOne
     @JoinColumn(name = "herramienta_id", nullable = false)
-    private Herramientas herramienta;
+    private Herramienta herramienta;
 
     @ManyToOne
     @JoinColumn(name = "proveedor_id", nullable = false)
     private Proveedor proveedor;
 
-    public ReporteIncidencias() {}
+    public ReporteIncidencia() {}
 
-    public ReporteIncidencias(String descripcion, BigDecimal costoReparacion, LocalDateTime fechaReporte) {
+    public ReporteIncidencia(String descripcion, BigDecimal costoReparacion, LocalDateTime fechaReporte) {
         this.descripcion = descripcion;
         this.costoReparacion = costoReparacion;
         this.fechaReporte = fechaReporte;
@@ -66,11 +66,11 @@ public class ReporteIncidencias {
         this.fechaReporte = fechaReporte;
     }
 
-    public Herramientas getHerramienta() {
+    public Herramienta getHerramienta() {
         return herramienta;
     }
 
-    public void setHerramienta(Herramientas herramienta) {
+    public void setHerramienta(Herramienta herramienta) {
         this.herramienta = herramienta;
     }
 

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "facturas")
-public class Facturas {
+public class Factura {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,11 +24,11 @@ public class Facturas {
 
     @OneToOne
     @JoinColumn(name = "pago_id", nullable = false)
-    private Pagos pago;
+    private Pago pago;
 
-    public Facturas() {}
+    public Factura() {}
 
-    public Facturas(String numeroFactura, LocalDateTime fechaEmision, BigDecimal total) {
+    public Factura(String numeroFactura, LocalDateTime fechaEmision, BigDecimal total) {
         this.numeroFactura = numeroFactura;
         this.fechaEmision = fechaEmision;
         this.total = total;
@@ -62,11 +62,11 @@ public class Facturas {
         this.total = total;
     }
 
-    public Pagos getPagos() {
+    public Pago getPagos() {
         return pago;
     }
 
-    public void setPagos(Pagos pagos) {
+    public void setPagos(Pago pagos) {
         this.pago = pagos;
     }
 }

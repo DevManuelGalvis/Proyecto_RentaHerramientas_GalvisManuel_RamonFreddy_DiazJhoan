@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "categoria_herramientas")
-public class CategoriaHerramientas {
+public class CategoriaHerramienta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,11 +17,11 @@ public class CategoriaHerramientas {
     private String nombre;
 
     @OneToMany(mappedBy = "categoriaHerramienta", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Herramientas> herramientas = new ArrayList<>();
+    private List<Herramienta> herramientas = new ArrayList<>();
 
-    public CategoriaHerramientas (){}
+    public CategoriaHerramienta(){}
 
-    public CategoriaHerramientas(String nombre) {
+    public CategoriaHerramienta(String nombre) {
         this.nombre = nombre;
     }
 
@@ -37,11 +37,11 @@ public class CategoriaHerramientas {
         this.nombre = nombre;
     }
 
-    public List<Herramientas> getHerramientas() {
+    public List<Herramienta> getHerramientas() {
         return new ArrayList<>(herramientas);
     }
 
-    public void setHerramientas(List<Herramientas> herramientas) {
+    public void setHerramientas(List<Herramienta> herramientas) {
         this.herramientas = herramientas;
     }
 }

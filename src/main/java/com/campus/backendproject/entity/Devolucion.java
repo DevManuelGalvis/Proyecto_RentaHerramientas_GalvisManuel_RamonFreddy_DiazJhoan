@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "devoluciones")
-public class Devoluciones {
+public class Devolucion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +25,11 @@ public class Devoluciones {
 
     @OneToOne
     @JoinColumn(name = "reserva_id", nullable = false)
-    private Reservas reserva;
+    private Reserva reserva;
 
-    public Devoluciones() {}
+    public Devolucion() {}
 
-    public Devoluciones(LocalDateTime fechaDevolucion, EstadoDevolucion estadoDevolucion, String observaciones) {
+    public Devolucion(LocalDateTime fechaDevolucion, EstadoDevolucion estadoDevolucion, String observaciones) {
         this.fechaDevolucion = fechaDevolucion;
         this.estadoDevolucion = estadoDevolucion;
         this.observaciones = observaciones;
@@ -63,11 +63,11 @@ public class Devoluciones {
         this.observaciones = observaciones;
     }
 
-    public Reservas getReserva() {
+    public Reserva getReserva() {
         return reserva;
     }
 
-    public void setReserva(Reservas reservas) {
+    public void setReserva(Reserva reservas) {
         this.reserva = reservas;
     }
 }
