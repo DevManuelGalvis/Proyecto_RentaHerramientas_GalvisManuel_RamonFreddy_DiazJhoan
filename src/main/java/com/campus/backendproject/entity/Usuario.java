@@ -31,7 +31,7 @@ public class Usuario {
     private Proveedor proveedor;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private  Clientes cliente;
+    private Cliente cliente;
 
     public Usuario() {}
 
@@ -95,11 +95,11 @@ public class Usuario {
         this.proveedor = proveedor;
     }
 
-    public Clientes getCliente() {
+    public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(Clientes cliente) {
+    public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 }

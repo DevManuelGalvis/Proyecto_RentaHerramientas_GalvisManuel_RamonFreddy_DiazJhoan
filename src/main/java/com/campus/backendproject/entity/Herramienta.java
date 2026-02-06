@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "herramientas")
-public class Herramientas {
+public class Herramienta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,24 +31,24 @@ public class Herramientas {
 
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)
-    private CategoriaHerramientas categoriaHerramienta;
+    private CategoriaHerramienta categoriaHerramienta;
 
     @ManyToOne
     @JoinColumn(name = "proveedor_id", nullable = false)
     private Proveedor proveedor;
 
     @OneToMany(mappedBy = "herramienta", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Reservas> reservas = new ArrayList<>();
+    private List<Reserva> reservas = new ArrayList<>();
 
     @OneToMany(mappedBy = "herramienta", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<ReporteIncidencias> reporteIncidencias = new ArrayList<>();
+    private List<ReporteIncidencia> reporteIncidencias = new ArrayList<>();
 
     @OneToOne(mappedBy = "herramienta", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private ImagenesHerramientas imagenesHerramientas;
+    private ImagenHerramienta imagenesHerramientas;
 
-    public Herramientas() {}
+    public Herramienta() {}
 
-    public Herramientas(String nombre, String descripcion, BigDecimal precio, EstadoHerramientas estado) {
+    public Herramienta(String nombre, String descripcion, BigDecimal precio, EstadoHerramientas estado) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -99,35 +99,35 @@ public class Herramientas {
         this.proveedor = proveedor;
     }
 
-    public List<Reservas> getReservas() {
+    public List<Reserva> getReservas() {
         return reservas;
     }
 
-    public void setReservas(List<Reservas> reservas) {
+    public void setReservas(List<Reserva> reservas) {
         this.reservas = reservas;
     }
 
-    public CategoriaHerramientas getCategoriaHerramienta() {
+    public CategoriaHerramienta getCategoriaHerramienta() {
         return categoriaHerramienta;
     }
 
-    public void setCategoriaHerramienta(CategoriaHerramientas categoriaHerramienta) {
+    public void setCategoriaHerramienta(CategoriaHerramienta categoriaHerramienta) {
         this.categoriaHerramienta = categoriaHerramienta;
     }
 
-    public List<ReporteIncidencias> getReporteIncidencias() {
+    public List<ReporteIncidencia> getReporteIncidencias() {
         return reporteIncidencias;
     }
 
-    public void setReporteIncidencias(List<ReporteIncidencias> reporteIncidencias) {
+    public void setReporteIncidencias(List<ReporteIncidencia> reporteIncidencias) {
         this.reporteIncidencias = reporteIncidencias;
     }
 
-    public ImagenesHerramientas getImagenesHerramientas() {
+    public ImagenHerramienta getImagenesHerramientas() {
         return imagenesHerramientas;
     }
 
-    public void setImagenesHerramientas(ImagenesHerramientas imagenesHerramientas) {
+    public void setImagenesHerramientas(ImagenHerramienta imagenesHerramientas) {
         this.imagenesHerramientas = imagenesHerramientas;
     }
 }
