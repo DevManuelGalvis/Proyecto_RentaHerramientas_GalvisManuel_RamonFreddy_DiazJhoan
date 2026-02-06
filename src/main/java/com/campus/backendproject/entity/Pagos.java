@@ -1,7 +1,7 @@
 package com.campus.backendproject.entity;
 
 import com.campus.backendproject.enums.EstadoPago;
-import com.campus.backendproject.enums.Metodo_Pago;
+import com.campus.backendproject.enums.MetodoPago;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -20,7 +20,7 @@ public class Pagos {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "metodo_pago", nullable = false)
-    private Metodo_Pago metodo_pago;
+    private MetodoPago metodo_pago;
 
     @Enumerated(EnumType.STRING)
     private EstadoPago estado_pago;
@@ -37,7 +37,7 @@ public class Pagos {
 
     public Pagos() {}
 
-    public Pagos(BigDecimal monto, Metodo_Pago metodo_pago, EstadoPago estado_pago, LocalDateTime fecha_pago) {
+    public Pagos(BigDecimal monto, MetodoPago metodo_pago, EstadoPago estado_pago, LocalDateTime fecha_pago) {
         this.monto = monto;
         this.metodo_pago = metodo_pago;
         this.estado_pago = estado_pago;
@@ -56,11 +56,11 @@ public class Pagos {
         this.monto = monto;
     }
 
-    public Metodo_Pago getMetodo_pago() {
+    public MetodoPago getMetodo_pago() {
         return metodo_pago;
     }
 
-    public void setMetodo_pago(Metodo_Pago metodo_pago) {
+    public void setMetodo_pago(MetodoPago metodo_pago) {
         this.metodo_pago = metodo_pago;
     }
 
