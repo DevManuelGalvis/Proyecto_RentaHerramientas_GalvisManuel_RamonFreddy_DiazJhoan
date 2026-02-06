@@ -21,15 +21,17 @@ public class Herramientas {
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
-    @Column(name = "categoria", nullable = false, length = 60)
-    private String categoria;
-
     @Column(name = "precio", nullable = false, precision = 10, scale = 2)
     private BigDecimal precio;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
     private EstadoHerramientas estado;
+
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id", nullable = false)
+    private CategoriaHerramientas categoriaHerramienta;
 
     @ManyToOne
     @JoinColumn(name = "proveedor_id", nullable = false)
@@ -41,12 +43,14 @@ public class Herramientas {
     @OneToMany(mappedBy = "herramienta", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ReporteIncidencias> reporteIncidencias = new ArrayList<>();
 
+    @OneToOne(mappedBy = "herramienta", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private ImagenesHerramientas imagenesHerramientas;
+
     public Herramientas() {}
 
-    public Herramientas(String nombre, String descripcion, String categoria, BigDecimal precio, EstadoHerramientas estado) {
+    public Herramientas(String nombre, String descripcion, BigDecimal precio, EstadoHerramientas estado) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.categoria = categoria;
         this.precio = precio;
         this.estado = estado;
     }
@@ -69,14 +73,6 @@ public class Herramientas {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
     }
 
     public BigDecimal getPrecio() {
@@ -111,11 +107,27 @@ public class Herramientas {
         this.reservas = reservas;
     }
 
+    public CategoriaHerramientas getCategoriaHerramienta() {
+        return categoriaHerramienta;
+    }
+
+    public void setCategoriaHerramienta(CategoriaHerramientas categoriaHerramienta) {
+        this.categoriaHerramienta = categoriaHerramienta;
+    }
+
     public List<ReporteIncidencias> getReporteIncidencias() {
         return reporteIncidencias;
     }
 
     public void setReporteIncidencias(List<ReporteIncidencias> reporteIncidencias) {
         this.reporteIncidencias = reporteIncidencias;
+    }
+
+    public ImagenesHerramientas getImagenesHerramientas() {
+        return imagenesHerramientas;
+    }
+
+    public void setImagenesHerramientas(ImagenesHerramientas imagenesHerramientas) {
+        this.imagenesHerramientas = imagenesHerramientas;
     }
 }

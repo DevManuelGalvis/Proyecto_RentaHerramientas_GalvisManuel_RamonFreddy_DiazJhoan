@@ -80,11 +80,11 @@ public class Pagos {
         this.fecha_pago = fecha_pago;
     }
 
-    public Reservas getReservas() {
+    public Reservas getReserva() {
         return reserva;
     }
 
-    public void setReservas(Reservas reservas) {
+    public void setReserva(Reservas reservas) {
         this.reserva = reservas;
     }
 

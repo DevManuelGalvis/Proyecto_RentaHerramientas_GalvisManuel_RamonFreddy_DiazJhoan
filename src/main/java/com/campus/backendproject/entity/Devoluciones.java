@@ -63,11 +63,11 @@ public class Devoluciones {
         this.observaciones = observaciones;
     }
 
-    public Reservas getReservas() {
+    public Reservas getReserva() {
         return reserva;
     }
 
-    public void setReservas(Reservas reservas) {
+    public void setReserva(Reservas reservas) {
         this.reserva = reservas;
     }
 }
