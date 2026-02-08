@@ -33,7 +33,7 @@ public class Reserva {
 
     @ManyToOne
     @JoinColumn(name = "herramienta_id", nullable = false)
-    private Herramientas herramienta;
+    private Herramienta herramienta;
 
     @OneToOne(mappedBy = "reserva", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Pago pagos;
@@ -94,11 +94,11 @@ public class Reserva {
         this.cliente = cliente;
     }
 
-    public Herramientas getHerramienta() {
+    public Herramienta getHerramienta() {
         return herramienta;
     }
 
-    public void setHerramienta(Herramientas herramienta) {
+    public void setHerramienta(Herramienta herramienta) {
         this.herramienta = herramienta;
     }
 

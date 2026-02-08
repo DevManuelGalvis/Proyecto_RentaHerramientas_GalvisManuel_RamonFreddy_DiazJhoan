@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "herramientas")
-public class Herramientas {
+public class Herramienta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,9 +46,9 @@ public class Herramientas {
     @OneToOne(mappedBy = "herramienta", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private ImagenesHerramienta imagenesHerramientas;
 
-    public Herramientas() {}
+    public Herramienta() {}
 
-    public Herramientas(String nombre, String descripcion, BigDecimal precio, EstadoHerramientas estado) {
+    public Herramienta(String nombre, String descripcion, BigDecimal precio, EstadoHerramientas estado) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;

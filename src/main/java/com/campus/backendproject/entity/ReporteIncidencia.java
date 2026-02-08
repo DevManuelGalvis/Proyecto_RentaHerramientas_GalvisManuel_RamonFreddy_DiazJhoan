@@ -24,7 +24,7 @@ public class ReporteIncidencia {
 
     @ManyToOne
     @JoinColumn(name = "herramienta_id", nullable = false)
-    private Herramientas herramienta;
+    private Herramienta herramienta;
 
     @ManyToOne
     @JoinColumn(name = "proveedor_id", nullable = false)
@@ -66,11 +66,11 @@ public class ReporteIncidencia {
         this.fechaReporte = fechaReporte;
     }
 
-    public Herramientas getHerramienta() {
+    public Herramienta getHerramienta() {
         return herramienta;
     }
 
-    public void setHerramienta(Herramientas herramienta) {
+    public void setHerramienta(Herramienta herramienta) {
         this.herramienta = herramienta;
     }
 
