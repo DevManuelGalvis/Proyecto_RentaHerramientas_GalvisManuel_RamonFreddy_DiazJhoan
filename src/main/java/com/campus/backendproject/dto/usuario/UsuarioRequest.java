@@ -8,12 +8,12 @@ import jakarta.validation.constraints.Size;
 
 public class UsuarioRequest {
 
-    @NotBlank(message = "El nombre no puede estar vacio")
+    @NotBlank(message = "El nombre no puede estar vacío")
     @Size(min = 3, max = 80, message = "El nombre debe tener entre 3 y 80 caracteres")
     private String nombre;
 
     @NotBlank(message = "El correo es obligatorio")
-    @Email(message = "Debe proporcionar un formato de correo válido (ejemplo@correo.com)")
+    @Email(message = "Debe proporcionar un formato de correo válido")
     private String correo;
 
     @NotBlank(message = "El documento de identidad es obligatorio")
@@ -23,20 +23,27 @@ public class UsuarioRequest {
     @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
     private String password;
 
-    @NotNull(message = "Debe seleccionar un rol (CLIENTE o PROVEEDOR)")
+    @NotNull(message = "Debe seleccionar un rol")
     private Roles rol;
 
-    @NotBlank(message = "La direccion de contacto es obligatoria")
     private String direccion;
 
-    @NotBlank(message = "El telefono es obligatorio para la gestion de alquileres")
     private String telefono;
 
     private String nombreEmpresa;
 
     public UsuarioRequest() {}
 
-    public UsuarioRequest(String nombre, String correo, String documento, String password, Roles rol, String direccion, String telefono) {
+    public UsuarioRequest(
+            String nombre,
+            String correo,
+            String documento,
+            String password,
+            Roles rol,
+            String direccion,
+            String telefono,
+            String nombreEmpresa
+    ) {
         this.nombre = nombre;
         this.correo = correo;
         this.documento = documento;
@@ -44,6 +51,7 @@ public class UsuarioRequest {
         this.rol = rol;
         this.direccion = direccion;
         this.telefono = telefono;
+        this.nombreEmpresa = nombreEmpresa;
     }
 
     public String getNombre() { return nombre; }
