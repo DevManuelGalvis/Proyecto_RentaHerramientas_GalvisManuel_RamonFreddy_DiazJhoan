@@ -44,7 +44,7 @@ public class Herramienta {
     private List<ReporteIncidencia> reporteIncidencias = new ArrayList<>();
 
     @OneToOne(mappedBy = "herramienta", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private ImagenesHerramienta imagenesHerramientas;
+    private ImagenHerramienta imagenesHerramientas;
 
     public Herramienta() {}
 
@@ -123,11 +123,11 @@ public class Herramienta {
         this.reporteIncidencias = reporteIncidencias;
     }
 
-    public ImagenesHerramienta getImagenesHerramientas() {
+    public ImagenHerramienta getImagenesHerramientas() {
         return imagenesHerramientas;
     }
 
-    public void setImagenesHerramientas(ImagenesHerramienta imagenesHerramientas) {
+    public void setImagenesHerramientas(ImagenHerramienta imagenesHerramientas) {
         this.imagenesHerramientas = imagenesHerramientas;
     }
 }
