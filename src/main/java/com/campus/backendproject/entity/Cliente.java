@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "clientes")
-public class Clientes {
+public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,11 +24,11 @@ public class Clientes {
     private Usuario usuario;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Reservas> reservas = new ArrayList<>();
+    private List<Reserva> reservas = new ArrayList<>();
 
-    public Clientes () {}
+    public Cliente() {}
 
-    public Clientes(String telefono, String direccion, Usuario usuario) {
+    public Cliente(String telefono, String direccion, Usuario usuario) {
         this.telefono = telefono;
         this.direccion = direccion;
         this.usuario = usuario;
@@ -62,11 +62,11 @@ public class Clientes {
         this.usuario = usuario;
     }
 
-    public List<Reservas> getReservas() {
+    public List<Reserva> getReservas() {
         return new ArrayList<>(reservas);
     }
 
-    public void setReservas(List<Reservas> reservas) {
+    public void setReservas(List<Reserva> reservas) {
         this.reservas = reservas;
     }
 }

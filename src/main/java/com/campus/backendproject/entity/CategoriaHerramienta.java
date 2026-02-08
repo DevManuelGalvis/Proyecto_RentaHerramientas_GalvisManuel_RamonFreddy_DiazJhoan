@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "categoria_herramientas")
-public class CategoriaHerramientas {
+public class CategoriaHerramienta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,9 +19,9 @@ public class CategoriaHerramientas {
     @OneToMany(mappedBy = "categoriaHerramienta", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Herramientas> herramientas = new ArrayList<>();
 
-    public CategoriaHerramientas (){}
+    public CategoriaHerramienta(){}
 
-    public CategoriaHerramientas(String nombre) {
+    public CategoriaHerramienta(String nombre) {
         this.nombre = nombre;
     }
 

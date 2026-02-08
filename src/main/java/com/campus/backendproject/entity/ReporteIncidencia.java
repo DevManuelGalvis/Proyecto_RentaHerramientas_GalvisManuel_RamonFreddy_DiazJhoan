@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "reporte_incidencias")
-public class ReporteIncidencias {
+public class ReporteIncidencia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +30,9 @@ public class ReporteIncidencias {
     @JoinColumn(name = "proveedor_id", nullable = false)
     private Proveedor proveedor;
 
-    public ReporteIncidencias() {}
+    public ReporteIncidencia() {}
 
-    public ReporteIncidencias(String descripcion, BigDecimal costoReparacion, LocalDateTime fechaReporte) {
+    public ReporteIncidencia(String descripcion, BigDecimal costoReparacion, LocalDateTime fechaReporte) {
         this.descripcion = descripcion;
         this.costoReparacion = costoReparacion;
         this.fechaReporte = fechaReporte;

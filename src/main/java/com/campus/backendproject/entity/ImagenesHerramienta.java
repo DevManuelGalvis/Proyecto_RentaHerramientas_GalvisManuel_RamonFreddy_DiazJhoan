@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "imagenes_herramientas")
-public class ImagenesHerramientas {
+public class ImagenesHerramienta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,9 +17,9 @@ public class ImagenesHerramientas {
     @JoinColumn(name = "herramienta_id", nullable = false)
     private Herramientas herramienta;
 
-    public ImagenesHerramientas (){}
+    public ImagenesHerramienta(){}
 
-    public ImagenesHerramientas(String urlImagen) {
+    public ImagenesHerramienta(String urlImagen) {
         this.urlImagen = urlImagen;
     }
 

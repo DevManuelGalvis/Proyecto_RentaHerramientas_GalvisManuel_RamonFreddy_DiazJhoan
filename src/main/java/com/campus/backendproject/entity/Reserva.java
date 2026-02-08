@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "reservas")
-public class Reservas {
+public class Reserva {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,21 +29,21 @@ public class Reservas {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
-    private Clientes cliente;
+    private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "herramienta_id", nullable = false)
     private Herramientas herramienta;
 
     @OneToOne(mappedBy = "reserva", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Pagos pagos;
+    private Pago pagos;
 
     @OneToOne(mappedBy = "reserva", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Devoluciones devoluciones;
+    private Devolucion devoluciones;
 
-    public Reservas() {}
+    public Reserva() {}
 
-    public Reservas(LocalDateTime fechaInicio, LocalDateTime fechaFin, EstadoReserva estadoReserva, BigDecimal total) {
+    public Reserva(LocalDateTime fechaInicio, LocalDateTime fechaFin, EstadoReserva estadoReserva, BigDecimal total) {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.estadoReserva = estadoReserva;
@@ -86,11 +86,11 @@ public class Reservas {
         this.total = total;
     }
 
-    public Clientes getCliente() {
+    public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(Clientes cliente) {
+    public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 
@@ -102,19 +102,19 @@ public class Reservas {
         this.herramienta = herramienta;
     }
 
-    public Pagos getPagos() {
+    public Pago getPagos() {
         return pagos;
     }
 
-    public void setPagos(Pagos pagos) {
+    public void setPagos(Pago pagos) {
         this.pagos = pagos;
     }
 
-    public Devoluciones getDevoluciones() {
+    public Devolucion getDevoluciones() {
         return devoluciones;
     }
 
-    public void setDevoluciones(Devoluciones devoluciones) {
+    public void setDevoluciones(Devolucion devoluciones) {
         this.devoluciones = devoluciones;
     }
 }

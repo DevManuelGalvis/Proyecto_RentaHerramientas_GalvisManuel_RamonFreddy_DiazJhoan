@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "pagos")
-public class Pagos {
+public class Pago {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,14 +30,14 @@ public class Pagos {
 
     @OneToOne
     @JoinColumn(name = "reserva_id", nullable = false)
-    private Reservas reserva;
+    private Reserva reserva;
 
     @OneToOne(mappedBy = "pago", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Facturas facturas;
+    private Factura facturas;
 
-    public Pagos() {}
+    public Pago() {}
 
-    public Pagos(BigDecimal monto, MetodoPago metodo_pago, EstadoPago estado_pago, LocalDateTime fecha_pago) {
+    public Pago(BigDecimal monto, MetodoPago metodo_pago, EstadoPago estado_pago, LocalDateTime fecha_pago) {
         this.monto = monto;
         this.metodo_pago = metodo_pago;
         this.estado_pago = estado_pago;
@@ -80,19 +80,19 @@ public class Pagos {
         this.fecha_pago = fecha_pago;
     }
 
-    public Reservas getReserva() {
+    public Reserva getReserva() {
         return reserva;
     }
 
-    public void setReserva(Reservas reservas) {
+    public void setReserva(Reserva reservas) {
         this.reserva = reservas;
     }
 
-    public Facturas getFacturas() {
+    public Factura getFacturas() {
         return facturas;
     }
 
-    public void setFacturas(Facturas facturas) {
+    public void setFacturas(Factura facturas) {
         this.facturas = facturas;
     }
 }

@@ -30,7 +30,7 @@ public class Proveedor {
     private List<Herramientas> herramientas = new ArrayList<>();
 
     @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<ReporteIncidencias> reporteIncidencias = new ArrayList<>();
+    private List<ReporteIncidencia> reporteIncidencias = new ArrayList<>();
 
     public Proveedor() {}
 
@@ -85,11 +85,11 @@ public class Proveedor {
         this.herramientas = herramientas;
     }
 
-    public List<ReporteIncidencias> getReporteIncidencias() {
+    public List<ReporteIncidencia> getReporteIncidencias() {
         return new ArrayList<>(reporteIncidencias);
     }
 
-    public void setReporteIncidencias(List<ReporteIncidencias> reporteIncidencias) {
+    public void setReporteIncidencias(List<ReporteIncidencia> reporteIncidencias) {
         this.reporteIncidencias = reporteIncidencias;
     }
 }
