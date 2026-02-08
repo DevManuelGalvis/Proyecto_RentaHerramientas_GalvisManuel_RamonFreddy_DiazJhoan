@@ -1,6 +1,7 @@
 package com.campus.backendproject.service.admin;
 
 import com.campus.backendproject.entity.Reserva;
+import com.campus.backendproject.exception.ResourceNotAvailableException;
 import com.campus.backendproject.repository.ReservaRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,10 @@ public class AdminReservaServiceImpl implements AdminReservaService {
 
     @Override
     public List<Reserva> listarReservas() {
-        return repository.findAll();
+        List<Reserva> reservas = repository.findAll();
+        if(reservas.isEmpty()){
+            throw new ResourceNotAvailableException("No hay reservas en la base de datos");
+        }
+        return reservas;
     }
 }

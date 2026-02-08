@@ -1,6 +1,7 @@
 package com.campus.backendproject.service.admin;
 
 import com.campus.backendproject.entity.ReporteIncidencia;
+import com.campus.backendproject.exception.ResourceNotAvailableException;
 import com.campus.backendproject.repository.ReporteIncidenciaRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,10 @@ public class AdminIncidenciaServiceImpl implements AdminIncidenciaService {
 
     @Override
     public List<ReporteIncidencia> listarIncidencias() {
-        return repository.findAll();
+        List<ReporteIncidencia> incidencias = repository.findAll();
+        if(incidencias.isEmpty()){
+            throw new ResourceNotAvailableException("No se encontro las incidencias en la base de datos");
+        }
+        return incidencias;
     }
 }

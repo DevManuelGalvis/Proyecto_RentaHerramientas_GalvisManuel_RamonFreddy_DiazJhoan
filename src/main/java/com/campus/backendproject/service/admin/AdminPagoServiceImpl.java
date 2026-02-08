@@ -1,6 +1,7 @@
 package com.campus.backendproject.service.admin;
 
 import com.campus.backendproject.entity.Pago;
+import com.campus.backendproject.exception.ResourceNotAvailableException;
 import com.campus.backendproject.repository.PagoRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,10 @@ public class AdminPagoServiceImpl implements AdminPagoService {
 
     @Override
     public List<Pago> listarPagos() {
-        return repository.findAll();
+        List<Pago> pagos = repository.findAll();
+        if(pagos.isEmpty()){
+            throw new ResourceNotAvailableException("No se encontro los pagos en la base de datos");
+        }
+        return pagos;
     }
 }
