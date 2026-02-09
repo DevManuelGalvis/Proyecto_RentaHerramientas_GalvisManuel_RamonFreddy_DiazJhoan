@@ -1,10 +1,8 @@
 package com.campus.backendproject.service.admin;
 
-import com.campus.backendproject.entity.Pago;
-
+import com.campus.backendproject.dto.admin.AdminPagoResponse;
 import java.util.List;
 
 public interface AdminPagoService {
-
-    List<Pago> listarPagos();
+    List<AdminPagoResponse> listarPagos();
 }

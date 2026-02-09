@@ -1,17 +1,17 @@
 package com.campus.backendproject.service.interfaz;
 
 import com.campus.backendproject.dto.herramienta.HerramientaResponse;
-
-import java.util.List;
+import com.campus.backendproject.enums.EstadoHerramientas;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface HerramientaService {
 
-    List<HerramientaResponse> listarTodas();
-
-    List<HerramientaResponse> disponibles();
-
-    List<HerramientaResponse> porCategoria(Long categoriaId);
-
-    List<HerramientaResponse> buscar(String nombre);
+    Page<HerramientaResponse> listarConFiltros(
+            EstadoHerramientas estado,
+            Long categoriaId,
+            String search,
+            Pageable pageable
+    );
 }
 

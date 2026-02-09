@@ -3,11 +3,11 @@ package com.campus.backendproject.service.impl;
 import com.campus.backendproject.dto.herramienta.HerramientaResponse;
 import com.campus.backendproject.entity.Herramienta;
 import com.campus.backendproject.enums.EstadoHerramientas;
-import com.campus.backendproject.exception.ResourceNotAvailableException;
 import com.campus.backendproject.repository.HerramientaRepository;
-import com.campus.backendproject.service.interfaz.HerramientaService;
+import com.campus.backendproject.service.HerramientaService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,62 +21,19 @@ public class HerramientaServiceImpl implements HerramientaService {
     }
 
     @Override
-    public List<HerramientaResponse> listarTodas() {
-        List<Herramienta> herramientas = repository.findAll();
-
-        if (herramientas.isEmpty()) {
-            throw new ResourceNotAvailableException("No se encontro la herramienta en la base de datos");
-        }
-
-        return herramientas.stream()
-                .map(this::mapToDto)
-                .toList();
-    }
-
-    @Override
-    public List<HerramientaResponse> disponibles() {
-        List<Herramienta> herramientas = repository.findByEstado(EstadoHerramientas.DISPONIBLE);
-
-        if (herramientas.isEmpty()) {
-            throw new ResourceNotAvailableException("No se encontro la herramienta en la base de datos");
-        }
-
-        return herramientas.stream()
-                .map(this::mapToDto)
-                .toList();
-    }
-
-    @Override
-    public List<HerramientaResponse> porCategoria(Long categoriaId) {
-        List<Herramienta> herramientas = repository.findByCategoriaHerramienta_Id(categoriaId);
-
-        if (herramientas.isEmpty()) {
-            throw new ResourceNotAvailableException("No se encontro la herramienta en la base de datos");
-        }
-
-        return herramientas.stream()
-                .map(this::mapToDto)
-                .toList();
-    }
-
-    @Override
-    public List<HerramientaResponse> buscar(String nombre) {
-        List<Herramienta> herramientas = repository.findByNombreContainingIgnoreCase(nombre);
-
-        if (herramientas.isEmpty()) {
-            throw new ResourceNotAvailableException("No se encontro la herramienta en la base de datos");
-        }
-
-        return herramientas.stream()
-                .map(this::mapToDto)
-                .toList();
+    public Page<HerramientaResponse> listarConFiltros(
+            EstadoHerramientas estado,
+            Long categoriaId,
+            String search,
+            Pageable pageable
+    ) {
+        return repository.findAllWithFilters(estado, categoriaId, search, pageable)
+                .map(this::mapToDto);
     }
 
     private HerramientaResponse mapToDto(Herramienta h) {
 
-        String nombreCategoria = (h.getCategoriaHerramienta() != null)
-                ? h.getCategoriaHerramienta().getNombre()
-                : null;
+        String nombreCategoria = h.getCategoriaHerramienta().getNombre();
 
         String nombreProveedor = h.getProveedor() != null
                 ? h.getProveedor().getNombreEmpresa()
@@ -98,4 +55,3 @@ public class HerramientaServiceImpl implements HerramientaService {
         );
     }
 }
-

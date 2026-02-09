@@ -1,5 +1,6 @@
 package com.campus.backendproject.controller.admin;
 
+import com.campus.backendproject.dto.admin.AdminPagoResponse;
 import com.campus.backendproject.entity.Pago;
 import com.campus.backendproject.service.admin.AdminPagoService;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,8 @@ public class AdminPagoController {
     }
 
     @GetMapping
-    public List<Pago> listar() {
+    public List<AdminPagoResponse> listar() {
         return service.listarPagos();
     }
+
 }

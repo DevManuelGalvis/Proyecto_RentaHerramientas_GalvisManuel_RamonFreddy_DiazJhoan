@@ -1,5 +1,6 @@
 package com.campus.backendproject.entity;
 
+import com.campus.backendproject.enums.EstadoIncidencia;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -21,6 +22,10 @@ public class ReporteIncidencia {
 
     @Column(name = "fecha_reporte", nullable = false)
     private LocalDateTime fechaReporte;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado", nullable = false)
+    private EstadoIncidencia estado = EstadoIncidencia.PENDIENTE;
 
     @ManyToOne
     @JoinColumn(name = "herramienta_id", nullable = false)
@@ -80,5 +85,13 @@ public class ReporteIncidencia {
 
     public void setProveedor(Proveedor proveedor) {
         this.proveedor = proveedor;
+    }
+
+    public EstadoIncidencia getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoIncidencia estado) {
+        this.estado = estado;
     }
 }
