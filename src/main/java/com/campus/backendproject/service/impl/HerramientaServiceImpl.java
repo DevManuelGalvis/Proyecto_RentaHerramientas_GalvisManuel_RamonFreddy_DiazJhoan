@@ -5,6 +5,8 @@ import com.campus.backendproject.entity.Herramienta;
 import com.campus.backendproject.enums.EstadoHerramientas;
 import com.campus.backendproject.repository.HerramientaRepository;
 import com.campus.backendproject.service.HerramientaService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,35 +21,14 @@ public class HerramientaServiceImpl implements HerramientaService {
     }
 
     @Override
-    public List<HerramientaResponse> listarTodas() {
-        return repository.findAll()
-                .stream()
-                .map(this::mapToDto)
-                .toList();
-    }
-
-    @Override
-    public List<HerramientaResponse> disponibles() {
-        return repository.findByEstado(EstadoHerramientas.DISPONIBLE)
-                .stream()
-                .map(this::mapToDto)
-                .toList();
-    }
-
-    @Override
-    public List<HerramientaResponse> porCategoria(Long categoriaId) {
-        return repository.findByCategoriaHerramienta_Id(categoriaId)
-                .stream()
-                .map(this::mapToDto)
-                .toList();
-    }
-
-    @Override
-    public List<HerramientaResponse> buscar(String nombre) {
-        return repository.findByNombreContainingIgnoreCase(nombre)
-                .stream()
-                .map(this::mapToDto)
-                .toList();
+    public Page<HerramientaResponse> listarConFiltros(
+            EstadoHerramientas estado,
+            Long categoriaId,
+            String search,
+            Pageable pageable
+    ) {
+        return repository.findAllWithFilters(estado, categoriaId, search, pageable)
+                .map(this::mapToDto);
     }
 
     private HerramientaResponse mapToDto(Herramienta h) {
@@ -74,4 +55,3 @@ public class HerramientaServiceImpl implements HerramientaService {
         );
     }
 }
-
