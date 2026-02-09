@@ -5,5 +5,4 @@ import com.campus.backendproject.enums.EstadoHerramientas;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReporteIncidenciaRepository extends JpaRepository<ReporteIncidencia, Long> {
-    boolean existsByHerramientaIdAndHerramientaEstado(Long id, EstadoHerramientas estado);
 }

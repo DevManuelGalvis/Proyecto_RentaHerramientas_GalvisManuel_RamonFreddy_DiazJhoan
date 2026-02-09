@@ -21,6 +21,8 @@ public interface HerramientaRepository extends JpaRepository<Herramienta, Long> 
             EstadoHerramientas estado,
             Long categoriaId
     );
+
+    boolean existsByNombre(String nombre);
 }
 
 
