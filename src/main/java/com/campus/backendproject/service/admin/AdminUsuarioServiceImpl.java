@@ -2,7 +2,10 @@ package com.campus.backendproject.service.admin;
 
 import com.campus.backendproject.dto.admin.AdminUsuarioResponse;
 import com.campus.backendproject.entity.Usuario;
+import com.campus.backendproject.enums.Roles;
 import com.campus.backendproject.repository.UsuarioRepository;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,11 +20,13 @@ public class AdminUsuarioServiceImpl implements AdminUsuarioService {
     }
 
     @Override
-    public List<AdminUsuarioResponse> listarUsuarios() {
-        return repository.findAll()
-                .stream()
-                .map(this::mapToDto)
-                .toList();
+    public Page<AdminUsuarioResponse> listarUsuarios(
+            Roles rol,
+            String search,
+            Pageable pageable
+    ) {
+        return repository.findAllWithFilters(rol, search, pageable)
+                .map(this::mapToDto);
     }
 
     @Override
