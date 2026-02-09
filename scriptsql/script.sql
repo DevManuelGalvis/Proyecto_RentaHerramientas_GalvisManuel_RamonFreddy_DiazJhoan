@@ -120,6 +120,7 @@ CREATE TABLE `reporte_incidencias` (
    `costo_reparacion` decimal(10,2) NOT NULL,
    `descripcion` varchar(255) NOT NULL,
    `fecha_reporte` datetime(6) NOT NULL,
+   `estado` varchar(30) NOT NULL DEFAULT 'PENDIENTE',
    `herramienta_id` bigint NOT NULL,
    `proveedor_id` bigint NOT NULL,
    PRIMARY KEY (`id`),

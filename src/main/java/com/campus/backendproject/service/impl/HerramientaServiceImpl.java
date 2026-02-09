@@ -4,7 +4,7 @@ import com.campus.backendproject.dto.herramienta.HerramientaResponse;
 import com.campus.backendproject.entity.Herramienta;
 import com.campus.backendproject.enums.EstadoHerramientas;
 import com.campus.backendproject.repository.HerramientaRepository;
-import com.campus.backendproject.service.HerramientaService;
+import com.campus.backendproject.service.interfaz.HerramientaService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

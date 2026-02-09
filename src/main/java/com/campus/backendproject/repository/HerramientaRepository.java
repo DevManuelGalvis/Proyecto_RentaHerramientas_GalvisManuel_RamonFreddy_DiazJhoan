@@ -29,4 +29,6 @@ public interface HerramientaRepository extends JpaRepository<Herramienta, Long> 
             @Param("search") String search,
             Pageable pageable
     );
+
+    boolean existsByNombre(String nombre);
 }
