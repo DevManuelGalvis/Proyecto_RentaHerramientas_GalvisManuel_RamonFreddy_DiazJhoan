@@ -18,8 +18,7 @@ public class CategoriaController {
     public CategoriaController(CategoriaHerramientaService service) {
         this.service = service;
     }
-
-    // Areglarla
+    
     @PostMapping("/buscar-nombre")
     public ResponseEntity<CategoriaResponse> buscarPorNombre(@RequestBody CategoriaRequest request) {
         CategoriaResponse response = service.buscarCategoriaPorNombre(request);

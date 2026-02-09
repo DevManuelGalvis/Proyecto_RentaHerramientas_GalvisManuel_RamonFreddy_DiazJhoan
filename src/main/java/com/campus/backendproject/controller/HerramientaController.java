@@ -2,7 +2,7 @@ package com.campus.backendproject.controller;
 
 import com.campus.backendproject.dto.herramienta.HerramientaResponse;
 import com.campus.backendproject.enums.EstadoHerramientas;
-import com.campus.backendproject.service.HerramientaService;
+import com.campus.backendproject.service.interfaz.HerramientaService;
 import com.campus.backendproject.service.impl.HerramientaServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
