@@ -1,4 +1,4 @@
-package com.campus.backendproject.service;
+package com.campus.backendproject.service.interfaz;
 
 import com.campus.backendproject.dto.herramienta.HerramientaResponse;
 

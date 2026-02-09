@@ -102,7 +102,7 @@ public class ProveedorHerramientaServiceImpl implements ProveedorHerramientaServ
         return convertirResponse(actualizado);
     }
 
-    public HerramientaResponse convertirResponse(Herramienta herramienta) {
+    private HerramientaResponse convertirResponse(Herramienta herramienta) {
         return new HerramientaResponse(
                 herramienta.getId(),
                 herramienta.getNombre(),

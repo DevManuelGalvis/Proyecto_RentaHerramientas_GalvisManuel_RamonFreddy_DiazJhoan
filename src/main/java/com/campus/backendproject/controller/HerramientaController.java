@@ -1,7 +1,7 @@
 package com.campus.backendproject.controller;
 
 import com.campus.backendproject.dto.herramienta.HerramientaResponse;
-import com.campus.backendproject.service.HerramientaService;
+import com.campus.backendproject.service.interfaz.HerramientaService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

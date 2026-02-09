@@ -5,8 +5,9 @@ import com.campus.backendproject.entity.Herramienta;
 import com.campus.backendproject.enums.EstadoHerramientas;
 import com.campus.backendproject.exception.ResourceNotAvailableException;
 import com.campus.backendproject.repository.HerramientaRepository;
-import com.campus.backendproject.service.HerramientaService;
+import com.campus.backendproject.service.interfaz.HerramientaService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
