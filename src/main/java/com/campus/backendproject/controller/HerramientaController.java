@@ -1,7 +1,11 @@
 package com.campus.backendproject.controller;
 
 import com.campus.backendproject.dto.herramienta.HerramientaResponse;
+import com.campus.backendproject.enums.EstadoHerramientas;
 import com.campus.backendproject.service.HerramientaService;
+import com.campus.backendproject.service.impl.HerramientaServiceImpl;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,22 +21,13 @@ public class HerramientaController {
     }
 
     @GetMapping
-    public List<HerramientaResponse> listar() {
-        return service.listarTodas();
-    }
-
-    @GetMapping("/disponibles")
-    public List<HerramientaResponse> disponibles() {
-        return service.disponibles();
-    }
-
-    @GetMapping("/categoria/{id}")
-    public List<HerramientaResponse> porCategoria(@PathVariable Long id) {
-        return service.porCategoria(id);
-    }
-
-    @GetMapping("/buscar")
-    public List<HerramientaResponse> buscar(@RequestParam String nombre) {
-        return service.buscar(nombre);
+    public Page<HerramientaResponse> listar(
+            @RequestParam(required = false) EstadoHerramientas estado,
+            @RequestParam(required = false) Long categoriaId,
+            @RequestParam(required = false, defaultValue = "") String search,
+            Pageable pageable
+    ) {
+        return service.listarConFiltros(estado, categoriaId, search, pageable);
     }
 }
+
