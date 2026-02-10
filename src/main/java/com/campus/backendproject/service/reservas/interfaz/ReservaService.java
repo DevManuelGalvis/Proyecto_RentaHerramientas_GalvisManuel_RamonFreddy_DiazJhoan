@@ -12,6 +12,7 @@ public interface ReservaService {
     ReservaResponse crearReserva(ReservaRequest request);
     ReservaResponse obtenerPorId(Long id);
     void cancelarReserva(Long id);
+    void completarDevolucion(Long reservaId);
     Page<ReservaResponse> listarConFiltros(
             EstadoReserva estado,
             String search,
