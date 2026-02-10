@@ -47,7 +47,7 @@ public class SecurityConfig {
                         sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/doc/**", "/api/herramientas/**").permitAll()
+                        .requestMatchers("/auth/**", "/doc/**", "/api/herramientas/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
                         .requestMatchers("/proveedor/**").hasRole("PROVEEDOR")
                         .requestMatchers("/cliente/**").hasRole("CLIENTE")
