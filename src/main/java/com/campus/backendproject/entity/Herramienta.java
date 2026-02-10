@@ -28,6 +28,8 @@ public class Herramienta {
     @Column(name = "estado", nullable = false)
     private EstadoHerramientas estado;
 
+    @Column(name = "stock", nullable = false)
+    private Integer stock;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)
@@ -48,11 +50,12 @@ public class Herramienta {
 
     public Herramienta() {}
 
-    public Herramienta(String nombre, String descripcion, BigDecimal precio, EstadoHerramientas estado) {
+    public Herramienta(String nombre, String descripcion, BigDecimal precio, EstadoHerramientas estado, Integer stock) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.estado = estado;
+        this.stock = stock;
     }
 
     public Long getId() {
@@ -89,6 +92,14 @@ public class Herramienta {
 
     public void setEstado(EstadoHerramientas estado) {
         this.estado = estado;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 
     public Proveedor getProveedor() {

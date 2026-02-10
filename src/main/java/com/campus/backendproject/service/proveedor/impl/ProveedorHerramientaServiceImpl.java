@@ -28,23 +28,26 @@ public class ProveedorHerramientaServiceImpl implements ProveedorHerramientaServ
         this.categoriaRepository = categoriaRepository;
         this.proveedorRepository = proveedorRepository;
     }
+
     @Override
     public HerramientaResponse crearHerramienta(HerramientaRequest herramientaRequest) {
         boolean existHerramientaConNombre = herramientaRepository.existsByNombre(herramientaRequest.getNombre());
         if(existHerramientaConNombre){
-            throw new ConflictDbException("Error ya existe esa herramienta con el mismo nombre");
+            throw new ConflictDbException("Error: ya existe esa herramienta con el mismo nombre");
         }
 
         CategoriaHerramienta categoria = categoriaRepository.findById(herramientaRequest.getCategoriaId())
-                .orElseThrow(() -> new RegistroNoEncontradoException("No se pudo crear la herramienta, " +
-                                "porque la categoria con el id " + herramientaRequest.getCategoriaId() + " no existe"));
+                .orElseThrow(() -> new RegistroNoEncontradoException("No se pudo crear la herramienta, porque la categoria con el id " + herramientaRequest.getCategoriaId() + " no existe"));
 
         Proveedor proveedor = proveedorRepository.findById(herramientaRequest.getProveedorId())
-                .orElseThrow(() -> new RegistroNoEncontradoException("No se pudo crear la herramienta, " +
-                        "porque el proveedor con id " + herramientaRequest.getProveedorId() + " no existe" ));
+                .orElseThrow(() -> new RegistroNoEncontradoException("No se pudo crear la herramienta, porque el proveedor con id " + herramientaRequest.getProveedorId() + " no existe" ));
 
         if(herramientaRequest.getPrecio().compareTo(BigDecimal.ZERO) <= 0){
             throw new BusinessRuleException("El precio de la herramienta debe ser mayor a 0");
+        }
+
+        if(herramientaRequest.getStock() == null || herramientaRequest.getStock() < 0){
+            throw new BusinessRuleException("El stock de la herramienta no puede ser nulo ni negativo");
         }
 
         Herramienta herramienta = new Herramienta();
@@ -52,12 +55,44 @@ public class ProveedorHerramientaServiceImpl implements ProveedorHerramientaServ
         herramienta.setDescripcion(herramientaRequest.getDescripcion());
         herramienta.setPrecio(herramientaRequest.getPrecio());
         herramienta.setEstado(herramientaRequest.getEstado());
+        herramienta.setStock(herramientaRequest.getStock());
         herramienta.setCategoriaHerramienta(categoria);
         herramienta.setProveedor(proveedor);
 
         Herramienta creada = herramientaRepository.save(herramienta);
-
         return convertirResponse(creada);
+    }
+
+    @Override
+    public HerramientaResponse actualizarHerramienta(Long id, HerramientaRequest herramientaRequest) {
+        Herramienta herramientaExistente = herramientaRepository.findById(id)
+                .orElseThrow(() -> new RegistroNoEncontradoException("No se pudo actualizar porque no se encontró la herramienta con el id " + id));
+
+        if(!herramientaExistente.getNombre().equalsIgnoreCase(herramientaRequest.getNombre()) &&
+                herramientaRepository.existsByNombre(herramientaRequest.getNombre())){
+            throw new ConflictDbException("Error: El nombre '" + herramientaRequest.getNombre() + "' ya existe en el sistema");
+        }
+
+        CategoriaHerramienta categoria = categoriaRepository.findById(herramientaRequest.getCategoriaId())
+                .orElseThrow(() -> new RegistroNoEncontradoException("Categoría no encontrada"));
+
+        Proveedor proveedor = proveedorRepository.findById(herramientaRequest.getProveedorId())
+                .orElseThrow(() -> new RegistroNoEncontradoException("Proveedor no encontrado"));
+
+        if(herramientaRequest.getPrecio().compareTo(BigDecimal.ZERO) <= 0){
+            throw new BusinessRuleException("El precio debe ser mayor a 0");
+        }
+
+        herramientaExistente.setNombre(herramientaRequest.getNombre());
+        herramientaExistente.setDescripcion(herramientaRequest.getDescripcion());
+        herramientaExistente.setPrecio(herramientaRequest.getPrecio());
+        herramientaExistente.setEstado(herramientaRequest.getEstado());
+        herramientaExistente.setStock(herramientaRequest.getStock());
+        herramientaExistente.setCategoriaHerramienta(categoria);
+        herramientaExistente.setProveedor(proveedor);
+
+        Herramienta actualizado = herramientaRepository.save(herramientaExistente);
+        return convertirResponse(actualizado);
     }
 
     @Override
@@ -68,40 +103,6 @@ public class ProveedorHerramientaServiceImpl implements ProveedorHerramientaServ
         herramientaRepository.deleteById(id);
     }
 
-    @Override
-    public HerramientaResponse actualizarHerramienta(Long id,HerramientaRequest herramientaRequest) {
-        Herramienta herramientaExistente = herramientaRepository.findById(id)
-                .orElseThrow(() -> new RegistroNoEncontradoException("No se pudo actualizar porque no se encontro la herramienta con el id " + id));
-
-        if(herramientaExistente.getNombre().equalsIgnoreCase(herramientaRequest.getNombre()) &&
-            herramientaRepository.existsByNombre(herramientaRequest.getNombre())){
-            throw new ConflictDbException("Error: El nombre '" + herramientaRequest.getNombre() + "' ya existe en el sistema");
-        }
-
-        CategoriaHerramienta categoria = categoriaRepository.findById(herramientaRequest.getCategoriaId())
-                .orElseThrow(() -> new RegistroNoEncontradoException("No se pudo actualizar la herramienta, " +
-                        "porque la categoria con id " + herramientaRequest.getCategoriaId() + " no existe"));
-
-        Proveedor proveedor = proveedorRepository.findById(herramientaRequest.getProveedorId())
-                .orElseThrow(() -> new RegistroNoEncontradoException("No se pudo actualizar la herramienta, " +
-                        "porque el proveedor con id " + herramientaRequest.getProveedorId() + " no existe" ));
-
-        if(herramientaRequest.getPrecio().compareTo(BigDecimal.ZERO) <= 0){
-            throw new BusinessRuleException("El precio actualizado de la herramienta debe ser mayor a 0");
-        }
-
-        herramientaExistente.setNombre(herramientaRequest.getNombre());
-        herramientaExistente.setDescripcion(herramientaRequest.getDescripcion());
-        herramientaExistente.setPrecio(herramientaRequest.getPrecio());
-        herramientaExistente.setEstado(herramientaRequest.getEstado());
-        herramientaExistente.setCategoriaHerramienta(categoria);
-        herramientaExistente.setProveedor(proveedor);
-
-        Herramienta actualizado = herramientaRepository.save(herramientaExistente);
-
-        return convertirResponse(actualizado);
-    }
-
     private HerramientaResponse convertirResponse(Herramienta herramienta) {
         return new HerramientaResponse(
                 herramienta.getId(),
@@ -109,6 +110,7 @@ public class ProveedorHerramientaServiceImpl implements ProveedorHerramientaServ
                 herramienta.getDescripcion(),
                 herramienta.getPrecio(),
                 herramienta.getEstado(),
+                herramienta.getStock(),
                 herramienta.getCategoriaHerramienta() != null ? herramienta.getCategoriaHerramienta().getNombre() : "Sin Categoría",
                 herramienta.getProveedor() != null ? herramienta.getProveedor().getNombreEmpresa() : "Sin Proveedor",
                 herramienta.getImagenesHerramientas() != null ? herramienta.getImagenesHerramientas().getUrlImagen() : "sin-imagen.png"

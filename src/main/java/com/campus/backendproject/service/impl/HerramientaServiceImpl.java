@@ -49,6 +49,7 @@ public class HerramientaServiceImpl implements HerramientaService {
                 h.getDescripcion(),
                 h.getPrecio(),
                 h.getEstado(),
+                h.getStock(),
                 nombreCategoria,
                 nombreProveedor,
                 urlImagen
