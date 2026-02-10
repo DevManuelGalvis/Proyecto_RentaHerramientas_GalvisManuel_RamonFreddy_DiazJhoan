@@ -99,6 +99,16 @@ public class ReservaServiceImpl implements ReservaService {
 
     @Override
     @Transactional
+    public void completarDevolucion(Long reservaId) {
+        Reserva reserva = reservaRepository.findById(reservaId)
+                .orElseThrow(() -> new RegistroNoEncontradoException("Reserva no encontrada"));
+
+        reserva.setEstadoReserva(EstadoReserva.DEVUELTA);
+        reservaRepository.save(reserva);
+    }
+
+    @Override
+    @Transactional
     public void cancelarReserva(Long id) {
         Reserva r = reservaRepository.findById(id)
                 .orElseThrow(() -> new RegistroNoEncontradoException("Reserva no encontrada"));
