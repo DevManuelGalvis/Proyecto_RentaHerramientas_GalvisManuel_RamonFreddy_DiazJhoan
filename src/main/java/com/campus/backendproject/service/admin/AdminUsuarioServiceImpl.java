@@ -25,7 +25,9 @@ public class AdminUsuarioServiceImpl implements AdminUsuarioService {
             String search,
             Pageable pageable
     ) {
-        return repository.findAllWithFilters(rol, search, pageable)
+        String filtro = (search == null) ? "" : search;
+
+        return repository.findAllWithFilters(rol, filtro, pageable)
                 .map(this::mapToDto);
     }
 

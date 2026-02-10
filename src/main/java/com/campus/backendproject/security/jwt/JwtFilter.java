@@ -33,6 +33,12 @@ public class JwtFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
+        String path = request.getServletPath();
+        if (path.startsWith("/doc") || path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String header = request.getHeader("Authorization");
 
         if (header == null || !header.startsWith("Bearer ")) {
@@ -43,13 +49,11 @@ public class JwtFilter extends OncePerRequestFilter {
         String token = header.substring(7);
 
         try {
-            // ✅ validar primero
             if (!jwtService.esValido(token)) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return;
             }
 
-            // ✅ ahora sí extraer datos
             String correo = jwtService.extraerCorreo(token);
 
             if (correo != null && SecurityContextHolder.getContext().getAuthentication() == null) {

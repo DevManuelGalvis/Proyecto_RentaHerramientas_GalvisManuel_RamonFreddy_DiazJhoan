@@ -5,6 +5,7 @@ import com.campus.backendproject.entity.Usuario;
 import com.campus.backendproject.enums.Roles;
 import com.campus.backendproject.service.admin.AdminUsuarioService;
 import com.campus.backendproject.service.admin.AdminUsuarioServiceImpl;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +16,9 @@ import java.util.List;
 @RequestMapping("/admin/usuarios")
 public class AdminUsuarioController {
 
-    private final AdminUsuarioServiceImpl service;
+    private final  AdminUsuarioService service;;
 
-    public AdminUsuarioController(AdminUsuarioServiceImpl service) {
+    public AdminUsuarioController(AdminUsuarioService service) {
         this.service = service;
     }
 
@@ -25,7 +26,7 @@ public class AdminUsuarioController {
     public Page<AdminUsuarioResponse> listar(
             @RequestParam(required = false) Roles rol,
             @RequestParam(required = false, defaultValue = "") String search,
-            Pageable pageable
+            @ParameterObject Pageable pageable
     ) {
         return service.listarUsuarios(rol, search, pageable);
     }
