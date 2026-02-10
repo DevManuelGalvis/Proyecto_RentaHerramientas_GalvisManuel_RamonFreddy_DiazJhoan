@@ -38,10 +38,23 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
             Pageable pageable
     );
 
+    @Query("""
+    SELECT COUNT(r) 
+    FROM Reserva r 
+    WHERE r.herramienta.id = :hId 
+      AND r.estadoReserva IN (com.campus.backendproject.enums.EstadoReserva.RESERVADA, 
+                              com.campus.backendproject.enums.EstadoReserva.EN_CURSO)
+      AND (:inicio < r.fechaFin AND :fin > r.fechaInicio)
+    """)
+    long countReservasActivasEnRango(
+            @Param("hId") Long herramientaId,
+            @Param("inicio") LocalDateTime inicio,
+            @Param("fin") LocalDateTime fin
+    );
 
     @Query("SELECT new com.campus.backendproject.dto.admin.AdminTopHerramientaResponse(r.herramienta.nombre, COUNT(r)) " +
             "FROM Reserva r " +
-            "GROUP BY r.herramienta " +
+            "GROUP BY r.herramienta.nombre " +
             "ORDER BY COUNT(r) DESC")
     List<AdminTopHerramientaResponse> findTopHerramientas();
 }
