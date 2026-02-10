@@ -1,33 +1,45 @@
 package com.campus.backendproject.service.admin;
 
 import com.campus.backendproject.dto.admin.AdminIncidenciaResponse;
+import com.campus.backendproject.entity.ReporteIncidencia;
+import com.campus.backendproject.enums.EstadoIncidencia;
 import com.campus.backendproject.repository.ReporteIncidenciaRepository;
-import com.campus.backendproject.service.admin.AdminIncidenciaService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class AdminIncidenciaServiceImpl implements AdminIncidenciaService {
 
-    private final ReporteIncidenciaRepository repo;
+    private final ReporteIncidenciaRepository repository;
 
-    public AdminIncidenciaServiceImpl(ReporteIncidenciaRepository repo) {
-        this.repo = repo;
+    public AdminIncidenciaServiceImpl(ReporteIncidenciaRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public List<AdminIncidenciaResponse> listarIncidencias() {
-        return repo.findAll().stream().map(i -> {
-            AdminIncidenciaResponse dto = new AdminIncidenciaResponse();
-            dto.setId(i.getId());
-            dto.setDescripcion(i.getDescripcion());
-            dto.setCosto(i.getCostoReparacion());
-            dto.setEstado(i.getEstado().name());
-            dto.setFecha(i.getFechaReporte());
-            dto.setHerramienta(i.getHerramienta().getNombre());
-            dto.setProveedor(i.getProveedor().getNombreEmpresa());
-            return dto;
-        }).toList();
+    public Page<AdminIncidenciaResponse> listarConFiltros(
+            EstadoIncidencia estado,
+            String search,
+            Pageable pageable
+    ) {
+        return repository.findAllWithFilters(estado, search, pageable)
+                .map(this::mapToDto);
+    }
+
+    private AdminIncidenciaResponse mapToDto(ReporteIncidencia r) {
+
+        AdminIncidenciaResponse dto = new AdminIncidenciaResponse();
+
+        dto.setId(r.getId());
+        dto.setDescripcion(r.getDescripcion());
+        dto.setCosto(r.getCostoReparacion());
+        dto.setEstado(r.getEstado().name());
+        dto.setHerramienta(r.getHerramienta().getNombre());
+        dto.setProveedor(r.getProveedor().getNombreEmpresa());
+        dto.setFecha(r.getFechaReporte());
+
+        return dto;
     }
 }
+
