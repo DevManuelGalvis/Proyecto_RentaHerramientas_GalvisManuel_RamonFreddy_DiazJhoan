@@ -1,11 +1,7 @@
 package com.campus.backendproject.dto.herramienta;
 
 import com.campus.backendproject.enums.EstadoHerramientas;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-
+import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 
 public class HerramientaRequest {
@@ -24,7 +20,11 @@ public class HerramientaRequest {
     @NotNull(message = "El estado de la herramienta es obligatorio")
     private EstadoHerramientas estado;
 
-    @NotNull(message = "La categoria es obligatoria")
+    @NotNull(message = "El stock es obligatorio")
+    @Min(value = 0, message = "El stock no puede ser negativo")
+    private Integer stock;
+
+    @NotNull(message = "La categoría es obligatoria")
     private Long categoriaId;
 
     @NotNull(message = "El proveedor es obligatorio")
@@ -33,11 +33,12 @@ public class HerramientaRequest {
     public HerramientaRequest() {}
 
     public HerramientaRequest(String nombre, String descripcion, BigDecimal precio,
-                              EstadoHerramientas estado, Long categoriaId, Long proveedorId) {
+                              EstadoHerramientas estado, Integer stock, Long categoriaId, Long proveedorId) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.estado = estado;
+        this.stock = stock;
         this.categoriaId = categoriaId;
         this.proveedorId = proveedorId;
     }
@@ -53,6 +54,9 @@ public class HerramientaRequest {
 
     public EstadoHerramientas getEstado() { return estado; }
     public void setEstado(EstadoHerramientas estado) { this.estado = estado; }
+
+    public Integer getStock() { return stock; }
+    public void setStock(Integer stock) { this.stock = stock; }
 
     public Long getCategoriaId() { return categoriaId; }
     public void setCategoriaId(Long categoriaId) { this.categoriaId = categoriaId; }
