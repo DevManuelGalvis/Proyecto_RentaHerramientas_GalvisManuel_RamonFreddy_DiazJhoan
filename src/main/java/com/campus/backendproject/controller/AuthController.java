@@ -1,5 +1,6 @@
 package com.campus.backendproject.controller;
 
+import com.campus.backendproject.dto.login.LoginRequest;
 import com.campus.backendproject.dto.usuario.UsuarioRequest;
 import com.campus.backendproject.entity.Cliente;
 import com.campus.backendproject.entity.Proveedor;
@@ -90,17 +91,17 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public Map<String, String> login(@RequestBody Map<String, String> body) {
+    public Map<String, String> login(@RequestBody LoginRequest request) {
 
         authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        body.get("correo"),
-                        body.get("password")
+                        request.getCorreo(),
+                        request.getPassword()
                 )
         );
 
         Usuario usuario = usuarioRepo
-                .findByCorreo(body.get("correo"))
+                .findByCorreo(request.getCorreo())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         String token = jwtService.generarToken(usuario);

@@ -17,7 +17,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     FROM Usuario u
     WHERE (:rol IS NULL OR u.rol = :rol)
       AND (
-            COALESCE(:search, '') = ''
+            :search IS NULL 
+            OR :search = '' 
             OR LOWER(u.nombre) LIKE LOWER(CONCAT('%', :search, '%'))
             OR LOWER(u.correo) LIKE LOWER(CONCAT('%', :search, '%'))
           )

@@ -47,6 +47,7 @@ CREATE TABLE `herramientas` (
     `estado` enum('ALQUILADA','DAÑADA','DISPONIBLE','MANTENIMIENTO') NOT NULL,
     `nombre` varchar(90) NOT NULL,
     `precio` decimal(10,2) NOT NULL,
+    `stock` int NOT NULL,
     `categoria_id` bigint NOT NULL,
     `proveedor_id` bigint NOT NULL,
     PRIMARY KEY (`id`),
@@ -54,7 +55,7 @@ CREATE TABLE `herramientas` (
     KEY `FKksrw997r6plty4sixxyjcickl` (`proveedor_id`),
     CONSTRAINT `FKfk6nrr8hxyacg5bqbn51o2h0j` FOREIGN KEY (`categoria_id`) REFERENCES `categoria_herramientas` (`id`),
     CONSTRAINT `FKksrw997r6plty4sixxyjcickl` FOREIGN KEY (`proveedor_id`) REFERENCES `proveedores` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
 CREATE TABLE `reservas` (
     `id` bigint NOT NULL AUTO_INCREMENT,
