@@ -1,8 +1,9 @@
 package com.campus.backendproject.enums;
 
 public enum EstadoReserva {
-    RESERVADA,
+    PENDIENTE,
+    CONFIRMADA,
     EN_CURSO,
-    DEVUELTA,
+    COMPLETADA,
     CANCELADA
 }

@@ -1,77 +1,66 @@
-package com.campus.backendproject.entity;
+package com.campus.backendproject.dto.request;
 
 import com.campus.backendproject.enums.EstadoHerramienta;
-import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "herramientas")
-public class Herramienta {
+public class HerramientaRequest {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @NotNull(message = "El ID del proveedor es obligatorio")
+    private Long proveedorId;
 
-    @ManyToOne
-    @JoinColumn(name = "proveedor_id", nullable = false)
-    private Proveedor proveedor;
+    @NotNull(message = "El ID de la categoria es obligatorio")
+    private Long categoriaId;
 
-    @ManyToOne
-    @JoinColumn(name = "categoria_id", nullable = false)
-    private Categoria categoria;
-
-    @Column(nullable = false, length = 200)
+    @NotBlank(message = "El nombre de la herramienta es obligatorio")
+    @Size(max = 200, message = "El nombre no puede tener mas de 200 caracteres")
     private String nombre;
 
-    @Column(columnDefinition = "TEXT")
+    @Size(max = 1000, message = "La descripcion no puede tener mas de 1000 caracteres")
     private String descripcion;
 
-    @Column(length = 100)
+    @Size(max = 100, message = "La marca no puede tener mas de 100 caracteres")
     private String marca;
 
-    @Column(length = 100)
+    @Size(max = 100, message = "El modelo no puede tener mas de 100 caracteres")
     private String modelo;
 
-    @Column(length = 255)
+    @Size(max = 255, message = "La URL de la imagen no puede tener mas de 255 caracteres")
     private String imagenUrl;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @NotNull(message = "El precio por dia es obligatorio")
+    @Positive(message = "El precio por dia debe ser mayor a cero")
     private BigDecimal precioPorDia;
 
-    @Column(precision = 10, scale = 2)
+    @Positive(message = "El precio por semana debe ser mayor a cero")
     private BigDecimal precioPorSemana;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
+    @NotNull(message = "El estado de la herramienta es obligatorio")
     private EstadoHerramienta estado;
 
-    @Column(nullable = false)
-    private Boolean disponible = true;
+    @NotNull(message = "La disponibilidad es obligatoria")
+    private Boolean disponible;
 
-    @Column(nullable = false)
-    private Integer cantidadDisponible = 1;
+    @NotNull(message = "La cantidad disponible es obligatoria")
+    @Positive(message = "La cantidad disponible debe ser mayor a cero")
+    private Integer cantidadDisponible;
 
-    @Column(columnDefinition = "TEXT")
+    @Size(max = 1000, message = "Las especificaciones tecnicas no pueden tener mas de 1000 caracteres")
     private String especificacionesTecnicas;
 
-    @CreationTimestamp
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime fechaRegistro;
-
-    public Herramienta() {
+    public HerramientaRequest() {
     }
 
-    public Herramienta(Long id, Proveedor proveedor, Categoria categoria, String nombre,
-                       String descripcion, String marca, String modelo, String imagenUrl,
-                       BigDecimal precioPorDia, BigDecimal precioPorSemana,
-                       EstadoHerramienta estado, Boolean disponible, Integer cantidadDisponible,
-                       String especificacionesTecnicas, LocalDateTime fechaRegistro) {
-        this.id = id;
-        this.proveedor = proveedor;
-        this.categoria = categoria;
+    public HerramientaRequest(Long proveedorId, Long categoriaId, String nombre, String descripcion,
+                              String marca, String modelo, String imagenUrl, BigDecimal precioPorDia,
+                              BigDecimal precioPorSemana, EstadoHerramienta estado, Boolean disponible,
+                              Integer cantidadDisponible, String especificacionesTecnicas) {
+        this.proveedorId = proveedorId;
+        this.categoriaId = categoriaId;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.marca = marca;
@@ -83,31 +72,22 @@ public class Herramienta {
         this.disponible = disponible;
         this.cantidadDisponible = cantidadDisponible;
         this.especificacionesTecnicas = especificacionesTecnicas;
-        this.fechaRegistro = fechaRegistro;
     }
 
-    public Long getId() {
-        return id;
+    public Long getProveedorId() {
+        return proveedorId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setProveedorId(Long proveedorId) {
+        this.proveedorId = proveedorId;
     }
 
-    public Proveedor getProveedor() {
-        return proveedor;
+    public Long getCategoriaId() {
+        return categoriaId;
     }
 
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setCategoriaId(Long categoriaId) {
+        this.categoriaId = categoriaId;
     }
 
     public String getNombre() {
@@ -196,13 +176,5 @@ public class Herramienta {
 
     public void setEspecificacionesTecnicas(String especificacionesTecnicas) {
         this.especificacionesTecnicas = especificacionesTecnicas;
-    }
-
-    public LocalDateTime getFechaRegistro() {
-        return fechaRegistro;
-    }
-
-    public void setFechaRegistro(LocalDateTime fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
     }
 }

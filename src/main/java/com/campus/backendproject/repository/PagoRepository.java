@@ -1,73 +1,34 @@
 package com.campus.backendproject.repository;
 
-import com.campus.backendproject.dto.admin.AdminPagoTableResponse;
 import com.campus.backendproject.entity.Pago;
+import com.campus.backendproject.entity.Reserva;
+import com.campus.backendproject.entity.Cliente;
+import com.campus.backendproject.entity.Proveedor;
 import com.campus.backendproject.enums.EstadoPago;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
 
+@Repository
 public interface PagoRepository extends JpaRepository<Pago, Long> {
 
-    @Query("""
-    SELECT new com.campus.backendproject.dto.admin.AdminPagoTableResponse(
-        p.id, 
-        f.id, 
-        c.usuario.nombre, 
-        h.nombre, 
-        p.monto, 
-        p.fecha_pago, 
-        r.fechaFin, 
-        CAST(p.estado_pago AS string)
-        )
-        FROM Pago p
-        JOIN p.reserva r
-        JOIN r.cliente c
-        JOIN r.herramienta h
-        LEFT JOIN Factura f ON f.pago.id = p.id
-        WHERE (:estado IS NULL OR p.estado_pago = :estado)
-        AND (
-            :search IS NULL OR
-            LOWER(c.usuario.nombre) LIKE LOWER(CONCAT('%', :search, '%'))
-        )
-        ORDER BY p.fecha_pago DESC
-    """)
-    Page<AdminPagoTableResponse> listarPagosAdmin(
-            @Param("search") String search,
-            @Param("estado") EstadoPago estado,
-            Pageable pageable
-    );
+    Optional<Pago> findByReserva(Reserva reserva);
 
-    @Query("SELECT COALESCE(SUM(p.monto), 0) FROM Pago p WHERE p.estado_pago = :estado")
-    BigDecimal totalPorEstado(@Param("estado") EstadoPago estado);
+    List<Pago> findByReservaCliente(Cliente cliente);
 
-    @Query("""
-SELECT COALESCE(SUM(p.monto),0)
-FROM Pago p
-WHERE p.reserva.herramienta.proveedor.id = :proveedorId
-AND p.estado_pago = 'COMPLETADO'
-AND MONTH(p.fecha_pago) = :mes
-AND YEAR(p.fecha_pago) = :anio
-""")
-    BigDecimal ingresosMensuales(
-            @Param("proveedorId") Long proveedorId,
-            @Param("mes") int mes,
-            @Param("anio") int anio
-    );
+    List<Pago> findByReservaHerramientaProveedor(Proveedor proveedor);
 
-    @Query("""
-SELECT p
-FROM Pago p
-WHERE p.reserva.herramienta.proveedor.id = :proveedorId
-ORDER BY p.fecha_pago DESC
-""")
-    Page<Pago> findByProveedor(
-            @Param("proveedorId") Long proveedorId,
-            Pageable pageable
-    );
+    List<Pago> findByEstadoPago(EstadoPago estadoPago);
 
+    @Query("SELECT SUM(p.monto) FROM Pago p WHERE p.estadoPago = 'COMPLETADO'")
+    BigDecimal calcularIngresosTotales();
+
+    @Query("SELECT p.reserva.herramienta.proveedor, SUM(p.monto) FROM Pago p " +
+            "WHERE p.estadoPago = 'COMPLETADO' " +
+            "GROUP BY p.reserva.herramienta.proveedor")
+    List<Object[]> calcularIngresosPorProveedor();
 }

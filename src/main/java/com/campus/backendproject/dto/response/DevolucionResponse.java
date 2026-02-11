@@ -1,44 +1,24 @@
-package com.campus.backendproject.entity;
+package com.campus.backendproject.dto.response;
 
 import com.campus.backendproject.enums.EstadoEquipo;
-import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "devoluciones")
-public class Devolucion {
+public class DevolucionResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToOne
-    @JoinColumn(name = "reserva_id", nullable = false, unique = true)
-    private Reserva reserva;
-
-    @CreationTimestamp
-    @Column(nullable = false, updatable = false)
+    private Long reservaId;
     private LocalDateTime fechaDevolucion;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
     private EstadoEquipo estadoEquipo;
-
-    @Column(columnDefinition = "TEXT")
     private String reporteDanos;
+    private Boolean aceptadoPorProveedor;
 
-    @Column(nullable = false)
-    private Boolean aceptadoPorProveedor = false;
-
-    public Devolucion() {
+    public DevolucionResponse() {
     }
 
-    public Devolucion(Long id, Reserva reserva, LocalDateTime fechaDevolucion,
-                      EstadoEquipo estadoEquipo, String reporteDanos, Boolean aceptadoPorProveedor) {
+    public DevolucionResponse(Long id, Long reservaId, LocalDateTime fechaDevolucion,
+                              EstadoEquipo estadoEquipo, String reporteDanos, Boolean aceptadoPorProveedor) {
         this.id = id;
-        this.reserva = reserva;
+        this.reservaId = reservaId;
         this.fechaDevolucion = fechaDevolucion;
         this.estadoEquipo = estadoEquipo;
         this.reporteDanos = reporteDanos;
@@ -53,12 +33,12 @@ public class Devolucion {
         this.id = id;
     }
 
-    public Reserva getReserva() {
-        return reserva;
+    public Long getReservaId() {
+        return reservaId;
     }
 
-    public void setReserva(Reserva reserva) {
-        this.reserva = reserva;
+    public void setReservaId(Long reservaId) {
+        this.reservaId = reservaId;
     }
 
     public LocalDateTime getFechaDevolucion() {

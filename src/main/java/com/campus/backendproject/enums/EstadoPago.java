@@ -1,6 +1,8 @@
 package com.campus.backendproject.enums;
 
 public enum EstadoPago {
-    PAGADO,
-    PENDIENTE
+    PENDIENTE,
+    COMPLETADO,
+    FALLIDO,
+    REEMBOLSADO
 }

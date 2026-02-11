@@ -1,65 +1,38 @@
-package com.campus.backendproject.entity;
+package com.campus.backendproject.dto.response;
 
 import com.campus.backendproject.enums.EstadoReserva;
-import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "reservas")
-public class Reserva {
+public class ReservaResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "cliente_id", nullable = false)
-    private Cliente cliente;
-
-    @ManyToOne
-    @JoinColumn(name = "herramienta_id", nullable = false)
-    private Herramienta herramienta;
-
-    @Column(nullable = false)
+    private Long clienteId;
+    private String nombreCliente;
+    private Long herramientaId;
+    private String nombreHerramienta;
     private LocalDate fechaInicio;
-
-    @Column(nullable = false)
     private LocalDate fechaFin;
-
-    @CreationTimestamp
-    @Column(nullable = false, updatable = false)
     private LocalDateTime fechaReserva;
-
-    @Column(nullable = false)
     private Integer diasAlquiler;
-
-    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal costoTotal;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
     private EstadoReserva estado;
-
-    @Column(length = 255)
     private String direccionEntrega;
-
-    @Column(columnDefinition = "TEXT")
     private String notasCliente;
 
-    public Reserva() {
+    public ReservaResponse() {
     }
 
-    public Reserva(Long id, Cliente cliente, Herramienta herramienta, LocalDate fechaInicio,
-                   LocalDate fechaFin, LocalDateTime fechaReserva, Integer diasAlquiler,
-                   BigDecimal costoTotal, EstadoReserva estado, String direccionEntrega,
-                   String notasCliente) {
+    public ReservaResponse(Long id, Long clienteId, String nombreCliente, Long herramientaId,
+                           String nombreHerramienta, LocalDate fechaInicio, LocalDate fechaFin,
+                           LocalDateTime fechaReserva, Integer diasAlquiler, BigDecimal costoTotal,
+                           EstadoReserva estado, String direccionEntrega, String notasCliente) {
         this.id = id;
-        this.cliente = cliente;
-        this.herramienta = herramienta;
+        this.clienteId = clienteId;
+        this.nombreCliente = nombreCliente;
+        this.herramientaId = herramientaId;
+        this.nombreHerramienta = nombreHerramienta;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.fechaReserva = fechaReserva;
@@ -78,20 +51,36 @@ public class Reserva {
         this.id = id;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Long getClienteId() {
+        return clienteId;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setClienteId(Long clienteId) {
+        this.clienteId = clienteId;
     }
 
-    public Herramienta getHerramienta() {
-        return herramienta;
+    public String getNombreCliente() {
+        return nombreCliente;
     }
 
-    public void setHerramienta(Herramienta herramienta) {
-        this.herramienta = herramienta;
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public Long getHerramientaId() {
+        return herramientaId;
+    }
+
+    public void setHerramientaId(Long herramientaId) {
+        this.herramientaId = herramientaId;
+    }
+
+    public String getNombreHerramienta() {
+        return nombreHerramienta;
+    }
+
+    public void setNombreHerramienta(String nombreHerramienta) {
+        this.nombreHerramienta = nombreHerramienta;
     }
 
     public LocalDate getFechaInicio() {

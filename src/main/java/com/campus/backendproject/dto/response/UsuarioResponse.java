@@ -1,64 +1,31 @@
-package com.campus.backendproject.entity;
+package com.campus.backendproject.dto.response;
 
 import com.campus.backendproject.enums.Rol;
-import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "usuarios")
-public class Usuario {
+public class UsuarioResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false, length = 100)
     private String nombre;
-
-    @Column(nullable = false, length = 100)
     private String apellido;
-
-    @Column(nullable = false, unique = true, length = 150)
     private String email;
-
-    @Column(nullable = false)
-    private String password;
-
-    @Column(length = 20)
     private String telefono;
-
-    @Column(length = 255)
     private String direccion;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
     private Rol rol;
-
-    @Column(nullable = false)
-    private Boolean activo = true;
-
-    @CreationTimestamp
-    @Column(nullable = false, updatable = false)
+    private Boolean activo;
     private LocalDateTime fechaRegistro;
-
-    @UpdateTimestamp
-    @Column(nullable = false)
     private LocalDateTime fechaActualizacion;
 
-    public Usuario() {
+    public UsuarioResponse() {
     }
 
-    public Usuario(Long id, String nombre, String apellido, String email, String password,
-                String telefono, String direccion, Rol rol, Boolean activo,
-                LocalDateTime fechaRegistro, LocalDateTime fechaActualizacion) {
+    public UsuarioResponse(Long id, String nombre, String apellido, String email,
+                              String telefono, String direccion, Rol rol, Boolean activo,
+                              LocalDateTime fechaRegistro, LocalDateTime fechaActualizacion) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
-        this.password = password;
         this.telefono = telefono;
         this.direccion = direccion;
         this.rol = rol;
@@ -97,14 +64,6 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getTelefono() {

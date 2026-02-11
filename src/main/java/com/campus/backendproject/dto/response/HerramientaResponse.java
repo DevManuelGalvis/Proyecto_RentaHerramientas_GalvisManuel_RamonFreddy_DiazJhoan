@@ -1,77 +1,43 @@
-package com.campus.backendproject.entity;
+package com.campus.backendproject.dto.response;
 
 import com.campus.backendproject.enums.EstadoHerramienta;
-import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "herramientas")
-public class Herramienta {
+public class HerramientaResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "proveedor_id", nullable = false)
-    private Proveedor proveedor;
-
-    @ManyToOne
-    @JoinColumn(name = "categoria_id", nullable = false)
-    private Categoria categoria;
-
-    @Column(nullable = false, length = 200)
+    private Long proveedorId;
+    private String nombreProveedor;
+    private Long categoriaId;
+    private String nombreCategoria;
     private String nombre;
-
-    @Column(columnDefinition = "TEXT")
     private String descripcion;
-
-    @Column(length = 100)
     private String marca;
-
-    @Column(length = 100)
     private String modelo;
-
-    @Column(length = 255)
     private String imagenUrl;
-
-    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal precioPorDia;
-
-    @Column(precision = 10, scale = 2)
     private BigDecimal precioPorSemana;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
     private EstadoHerramienta estado;
-
-    @Column(nullable = false)
-    private Boolean disponible = true;
-
-    @Column(nullable = false)
-    private Integer cantidadDisponible = 1;
-
-    @Column(columnDefinition = "TEXT")
+    private Boolean disponible;
+    private Integer cantidadDisponible;
     private String especificacionesTecnicas;
-
-    @CreationTimestamp
-    @Column(nullable = false, updatable = false)
     private LocalDateTime fechaRegistro;
 
-    public Herramienta() {
+    public HerramientaResponse() {
     }
 
-    public Herramienta(Long id, Proveedor proveedor, Categoria categoria, String nombre,
-                       String descripcion, String marca, String modelo, String imagenUrl,
-                       BigDecimal precioPorDia, BigDecimal precioPorSemana,
-                       EstadoHerramienta estado, Boolean disponible, Integer cantidadDisponible,
-                       String especificacionesTecnicas, LocalDateTime fechaRegistro) {
+    public HerramientaResponse(Long id, Long proveedorId, String nombreProveedor, Long categoriaId,
+                               String nombreCategoria, String nombre, String descripcion, String marca,
+                               String modelo, String imagenUrl, BigDecimal precioPorDia,
+                               BigDecimal precioPorSemana, EstadoHerramienta estado, Boolean disponible,
+                               Integer cantidadDisponible, String especificacionesTecnicas,
+                               LocalDateTime fechaRegistro) {
         this.id = id;
-        this.proveedor = proveedor;
-        this.categoria = categoria;
+        this.proveedorId = proveedorId;
+        this.nombreProveedor = nombreProveedor;
+        this.categoriaId = categoriaId;
+        this.nombreCategoria = nombreCategoria;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.marca = marca;
@@ -94,20 +60,36 @@ public class Herramienta {
         this.id = id;
     }
 
-    public Proveedor getProveedor() {
-        return proveedor;
+    public Long getProveedorId() {
+        return proveedorId;
     }
 
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
+    public void setProveedorId(Long proveedorId) {
+        this.proveedorId = proveedorId;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public String getNombreProveedor() {
+        return nombreProveedor;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setNombreProveedor(String nombreProveedor) {
+        this.nombreProveedor = nombreProveedor;
+    }
+
+    public Long getCategoriaId() {
+        return categoriaId;
+    }
+
+    public void setCategoriaId(Long categoriaId) {
+        this.categoriaId = categoriaId;
+    }
+
+    public String getNombreCategoria() {
+        return nombreCategoria;
+    }
+
+    public void setNombreCategoria(String nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
     }
 
     public String getNombre() {

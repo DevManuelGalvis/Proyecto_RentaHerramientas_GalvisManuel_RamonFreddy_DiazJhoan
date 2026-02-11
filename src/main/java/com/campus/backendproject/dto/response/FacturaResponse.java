@@ -1,43 +1,24 @@
-package com.campus.backendproject.entity;
-
-import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
+package com.campus.backendproject.dto.response;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "facturas")
-public class Factura {
+public class FacturaResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToOne
-    @JoinColumn(name = "pago_id", nullable = false, unique = true)
-    private Pago pago;
-
-    @Column(nullable = false, unique = true, length = 50)
+    private Long pagoId;
     private String numeroFactura;
-
-    @CreationTimestamp
-    @Column(nullable = false, updatable = false)
     private LocalDateTime fechaEmision;
-
-    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal total;
-
-    @Column(length = 255)
     private String urlPDF;
 
-    public Factura() {
+    public FacturaResponse() {
     }
 
-    public Factura(Long id, Pago pago, String numeroFactura, LocalDateTime fechaEmision,
-                   BigDecimal total, String urlPDF) {
+    public FacturaResponse(Long id, Long pagoId, String numeroFactura, LocalDateTime fechaEmision,
+                           BigDecimal total, String urlPDF) {
         this.id = id;
-        this.pago = pago;
+        this.pagoId = pagoId;
         this.numeroFactura = numeroFactura;
         this.fechaEmision = fechaEmision;
         this.total = total;
@@ -52,12 +33,12 @@ public class Factura {
         this.id = id;
     }
 
-    public Pago getPago() {
-        return pago;
+    public Long getPagoId() {
+        return pagoId;
     }
 
-    public void setPago(Pago pago) {
-        this.pago = pago;
+    public void setPagoId(Long pagoId) {
+        this.pagoId = pagoId;
     }
 
     public String getNumeroFactura() {

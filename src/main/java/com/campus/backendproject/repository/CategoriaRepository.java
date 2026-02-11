@@ -1,8 +1,15 @@
 package com.campus.backendproject.repository;
 
-import com.campus.backendproject.entity.CategoriaHerramienta;
+import com.campus.backendproject.entity.Categoria;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface CategoriaRepository extends JpaRepository<CategoriaHerramienta, Long> {
-    CategoriaHerramienta findByNombre(String nombre);
+import java.util.Optional;
+
+@Repository
+public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
+
+    Optional<Categoria> findByNombre(String nombre);
+
+    boolean existsByNombre(String nombre);
 }

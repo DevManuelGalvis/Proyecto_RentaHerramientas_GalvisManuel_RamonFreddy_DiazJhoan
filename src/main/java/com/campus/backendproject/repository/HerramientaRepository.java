@@ -1,81 +1,27 @@
 package com.campus.backendproject.repository;
 
 import com.campus.backendproject.entity.Herramienta;
-import com.campus.backendproject.enums.EstadoHerramientas;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.campus.backendproject.entity.Proveedor;
+import com.campus.backendproject.entity.Categoria;
+import com.campus.backendproject.enums.EstadoHerramienta;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface HerramientaRepository extends JpaRepository<Herramienta, Long> {
 
-    @Query("""
-        SELECT h
-        FROM Herramienta h
-        JOIN h.categoriaHerramienta c
-        WHERE (:estado IS NULL OR h.estado = :estado)
-          AND (:categoriaId IS NULL OR c.id = :categoriaId)
-          AND (
-                COALESCE(:search, '') = ''
-                OR LOWER(h.nombre) LIKE LOWER(CONCAT('%', :search, '%'))
-              )
-    """)
-    Page<Herramienta> findAllWithFilters(
-            @Param("estado") EstadoHerramientas estado,
-            @Param("categoriaId") Long categoriaId,
-            @Param("search") String search,
-            Pageable pageable
-    );
+    List<Herramienta> findByProveedor(Proveedor proveedor);
 
-    @Query("""
-SELECT h
-FROM Herramienta h
-JOIN h.categoriaHerramienta c
-WHERE h.proveedor.id = :proveedorId
-AND (:estado IS NULL OR h.estado = :estado)
-AND (:categoriaId IS NULL OR c.id = :categoriaId)
-AND (
-    COALESCE(:search,'') = '' 
-    OR LOWER(h.nombre) LIKE LOWER(CONCAT('%', :search, '%'))
-)
-""")
-    Page<Herramienta> findByProveedorWithFilters(
-            @Param("proveedorId") Long proveedorId,
-            @Param("estado") EstadoHerramientas estado,
-            @Param("categoriaId") Long categoriaId,
-            @Param("search") String search,
-            Pageable pageable
-    );
+    List<Herramienta> findByCategoria(Categoria categoria);
 
-    @Query("""
-SELECT COUNT(h)
-FROM Herramienta h
-WHERE h.proveedor.id = :proveedorId
-""")
-    long countByProveedor(@Param("proveedorId") Long proveedorId);
+    List<Herramienta> findByDisponibleTrue();
 
-    @Query("""
-SELECT c.nombre, COUNT(h)
-FROM Herramienta h
-JOIN h.categoriaHerramienta c
-WHERE h.proveedor.id = :proveedorId
-GROUP BY c.nombre
-""")
-    List<Object[]> countByCategoriaProveedor(@Param("proveedorId") Long proveedorId);
+    List<Herramienta> findByCategoriaAndDisponibleTrue(Categoria categoria);
 
-    @Query("""
-SELECT h.estado, COUNT(h)
-FROM Herramienta h
-WHERE h.proveedor.id = :proveedorId
-GROUP BY h.estado
-""")
-    List<Object[]> countByEstadoProveedor(@Param("proveedorId") Long proveedorId);
+    Optional<Herramienta> findByIdAndDisponibleTrue(Long id);
 
-
-    boolean existsByNombre(String nombre);
+    List<Herramienta> findByEstado(EstadoHerramienta estado);
 }

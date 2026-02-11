@@ -1,54 +1,29 @@
-package com.campus.backendproject.entity;
+package com.campus.backendproject.dto.response;
 
 import com.campus.backendproject.enums.MetodoPago;
 import com.campus.backendproject.enums.EstadoPago;
-import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "pagos")
-public class Pago {
+public class PagoResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToOne
-    @JoinColumn(name = "reserva_id", nullable = false, unique = true)
-    private Reserva reserva;
-
-    @Column(nullable = false, precision = 10, scale = 2)
+    private Long reservaId;
     private BigDecimal monto;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 30)
     private MetodoPago metodoPago;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
     private EstadoPago estadoPago;
-
-    @CreationTimestamp
-    @Column(nullable = false, updatable = false)
     private LocalDateTime fechaPago;
-
-    @Column(unique = true, length = 100)
     private String numeroTransaccion;
-
-    @Column(length = 255)
     private String comprobantePago;
 
-    public Pago() {
+    public PagoResponse() {
     }
 
-    public Pago(Long id, Reserva reserva, BigDecimal monto, MetodoPago metodoPago,
-                EstadoPago estadoPago, LocalDateTime fechaPago, String numeroTransaccion,
-                String comprobantePago) {
+    public PagoResponse(Long id, Long reservaId, BigDecimal monto, MetodoPago metodoPago,
+                        EstadoPago estadoPago, LocalDateTime fechaPago, String numeroTransaccion,
+                        String comprobantePago) {
         this.id = id;
-        this.reserva = reserva;
+        this.reservaId = reservaId;
         this.monto = monto;
         this.metodoPago = metodoPago;
         this.estadoPago = estadoPago;
@@ -65,12 +40,12 @@ public class Pago {
         this.id = id;
     }
 
-    public Reserva getReserva() {
-        return reserva;
+    public Long getReservaId() {
+        return reservaId;
     }
 
-    public void setReserva(Reserva reserva) {
-        this.reserva = reserva;
+    public void setReservaId(Long reservaId) {
+        this.reservaId = reservaId;
     }
 
     public BigDecimal getMonto() {

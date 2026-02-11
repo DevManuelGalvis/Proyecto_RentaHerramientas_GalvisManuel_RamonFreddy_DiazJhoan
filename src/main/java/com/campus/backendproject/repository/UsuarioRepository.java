@@ -1,38 +1,19 @@
 package com.campus.backendproject.repository;
 
 import com.campus.backendproject.entity.Usuario;
-import com.campus.backendproject.enums.Roles;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.campus.backendproject.enums.Rol;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    @Query("""
-    SELECT u
-    FROM Usuario u
-    WHERE (:rol IS NULL OR u.rol = :rol)
-      AND (
-            :search IS NULL 
-            OR :search = '' 
-            OR LOWER(u.nombre) LIKE LOWER(CONCAT('%', :search, '%'))
-            OR LOWER(u.correo) LIKE LOWER(CONCAT('%', :search, '%'))
-          )
-""")
-    Page<Usuario> findAllWithFilters(
-            @Param("rol") Roles rol,
-            @Param("search") String search,
-            Pageable pageable
-    );
+    Optional<Usuario> findByEmail(String email);
 
+    boolean existsByEmail(String email);
 
-    Optional<Usuario> findByCorreo(String correo);
-
-    boolean existsByCorreo(String correo);
-
-    boolean existsByDocumento(String documento);
+    List<Usuario> findByRol(Rol rol);
 }

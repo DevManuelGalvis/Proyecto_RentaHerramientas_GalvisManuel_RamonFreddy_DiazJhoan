@@ -1,9 +1,7 @@
 package com.campus.backendproject.entity;
 
 import jakarta.persistence.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "proveedores")
@@ -13,60 +11,39 @@ public class Proveedor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre_empresa", nullable = false, length = 100)
-    private String nombreEmpresa;
-
-    @Column(name = "telefono", nullable = false, length = 30)
-    private String telefono;
-
-    @Column(name = "direccion", nullable = false)
-    private String direccion;
-
     @OneToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @JoinColumn(name = "usuario_id", nullable = false, unique = true)
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Herramienta> herramientas = new ArrayList<>();
+    @Column(nullable = false, length = 200)
+    private String nombreEmpresa;
 
-    @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<ReporteIncidencia> reporteIncidencias = new ArrayList<>();
+    @Column(nullable = false, unique = true, length = 50)
+    private String ruc;
 
-    public Proveedor() {}
+    @Column(columnDefinition = "TEXT")
+    private String descripcion;
 
-    public Proveedor(String nombreEmpresa, String telefono, String direccion, Usuario usuario) {
-        this.nombreEmpresa = nombreEmpresa;
-        this.telefono = telefono;
-        this.direccion = direccion;
-        this.usuario = usuario;
+    public Proveedor() {
     }
 
+    public Proveedor(Long id, Usuario usuario, String nombreEmpresa, String ruc,
+                     String descripcion) {
+        this.id = id;
+        this.usuario = usuario;
+        this.nombreEmpresa = nombreEmpresa;
+        this.ruc = ruc;
+        this.descripcion = descripcion;
+
+    }
+
+    // Getters y Setters
     public Long getId() {
         return id;
     }
 
-    public String getNombreEmpresa() {
-        return nombreEmpresa;
-    }
-
-    public void setNombreEmpresa(String nombreEmpresa) {
-        this.nombreEmpresa = nombreEmpresa;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Usuario getUsuario() {
@@ -77,19 +54,28 @@ public class Proveedor {
         this.usuario = usuario;
     }
 
-    public List<Herramienta> getHerramientas() {
-        return new ArrayList<>(herramientas);
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
     }
 
-    public void setHerramientas(List<Herramienta> herramientas) {
-        this.herramientas = herramientas;
+    public void setNombreEmpresa(String nombreEmpresa) {
+        this.nombreEmpresa = nombreEmpresa;
     }
 
-    public List<ReporteIncidencia> getReporteIncidencias() {
-        return new ArrayList<>(reporteIncidencias);
+    public String getRuc() {
+        return ruc;
     }
 
-    public void setReporteIncidencias(List<ReporteIncidencia> reporteIncidencias) {
-        this.reporteIncidencias = reporteIncidencias;
+    public void setRuc(String ruc) {
+        this.ruc = ruc;
     }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
 }
