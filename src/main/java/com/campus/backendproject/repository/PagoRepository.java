@@ -42,7 +42,32 @@ public interface PagoRepository extends JpaRepository<Pago, Long> {
             Pageable pageable
     );
 
-    // 🔹 Totales
     @Query("SELECT COALESCE(SUM(p.monto), 0) FROM Pago p WHERE p.estado_pago = :estado")
     BigDecimal totalPorEstado(@Param("estado") EstadoPago estado);
+
+    @Query("""
+SELECT COALESCE(SUM(p.monto),0)
+FROM Pago p
+WHERE p.reserva.herramienta.proveedor.id = :proveedorId
+AND p.estado_pago = 'COMPLETADO'
+AND MONTH(p.fecha_pago) = :mes
+AND YEAR(p.fecha_pago) = :anio
+""")
+    BigDecimal ingresosMensuales(
+            @Param("proveedorId") Long proveedorId,
+            @Param("mes") int mes,
+            @Param("anio") int anio
+    );
+
+    @Query("""
+SELECT p
+FROM Pago p
+WHERE p.reserva.herramienta.proveedor.id = :proveedorId
+ORDER BY p.fecha_pago DESC
+""")
+    Page<Pago> findByProveedor(
+            @Param("proveedorId") Long proveedorId,
+            Pageable pageable
+    );
+
 }
